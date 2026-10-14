@@ -24,6 +24,14 @@ export async function getAllPostPreviews(): Promise<PostPreview[]> {
     } as PostPreview)
   }
 
+  // Sort newest-first by frontmatter date; posts without a date go last
+  // (in filesystem order) so Brite's dated posts always lead.
+  postPreviews.sort((a, b) => {
+    const dateA = a.date ? new Date(a.date as string).getTime() : 0
+    const dateB = b.date ? new Date(b.date as string).getTime() : 0
+    return dateB - dateA
+  })
+
   return postPreviews
 }
 

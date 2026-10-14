@@ -3,4 +3,5 @@ export type PostPreview = {
   description: string
   previewImage: string
   slug: string
+  date?: string
 }
