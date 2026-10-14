@@ -28,8 +28,13 @@ export default function PostPage({ source }: InferGetStaticPropsType<typeof getS
     </div>
   )
 }
+import { getAllSlugs } from "@/lib/posts"
+
 export async function getStaticPaths() {
-  return { paths: [], fallback: "blocking" }
+  return {
+    paths: getAllSlugs().map((slug) => ({ params: { slug } })),
+    fallback: false,
+  }
 }
 
 export async function getStaticProps(
@@ -50,7 +55,5 @@ export async function getStaticProps(
     props: {
       source: mdxSource,
     },
-    // enable ISR
-    revalidate: 60,
   }
 }
